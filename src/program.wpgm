@@ -1,0 +1,45 @@
+import wollok.game.*
+import rodados.*
+import paredes.*
+
+program cosasEnElGame {
+	var auto = []
+
+	game.title("corsas En el Game")
+	
+	game.height(10)
+	game.width(10)
+	const corsa = new ChevroletCorsa()
+	const corsa2 = new ChevroletCorsa()
+	const corsa3 = new ChevroletCorsa()
+	const pare = new Pared(position = game.at(5,5))
+	const pare2 = new Pared(position = game.at(3,3))
+	const pare3 = new Pared(position = game.at(7,4))
+	
+	game.addVisual(pare)
+	game.addVisual(pare2)
+	game.addVisual(pare3)
+	game.addVisual(corsa)
+	game.addVisual(corsa2)
+	game.addVisual(corsa3)
+	
+	
+	game.onCollideDo(corsa, {pared=>corsa.chocar(pared)})
+	
+	keyboard.num1().onPressDo{auto = [corsa]}
+	keyboard.num2().onPressDo{auto = [corsa2]}
+	keyboard.num3().onPressDo{auto = [corsa3]}
+	keyboard.t().onPressDo{auto = [corsa, corsa2, corsa3]}
+
+	keyboard.up().onPressDo{auto.forEach({a=>a.moverse(norte)})}
+	keyboard.down().onPressDo{auto.forEach({a=>a.moverse(sur)})}
+	keyboard.right().onPressDo{auto.forEach({a=>a.moverse(este)})}
+	keyboard.left().onPressDo{auto.forEach({a=>a.moverse(oeste)})}
+	keyboard.r().onPressDo{auto.forEach({a=>a.image("autitorojo.png")})}
+	keyboard.a().onPressDo{auto.forEach({a=>a.image("autoazul.png")})}
+	keyboard.v().onPressDo{auto.forEach({a=>a.image("autoverde.png")})}
+	
+	
+	game.start()
+
+}
